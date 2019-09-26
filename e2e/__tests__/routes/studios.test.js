@@ -31,7 +31,16 @@ describe('Studios Route Test', ()=> {
     });
 	});
 
-	// it('gets a studio by id')
+	it('gets a studio by id', () => {
+		return postStudio(marvel).then(studio => {
+			return request.get(`/api/studios/${studio._id}`)
+				.expect(200)
+				.then(({ body }) => {
+					expect(body).toEqual(studio);
+				});
+		});
+	});
+});
 	
 
 	
@@ -42,4 +51,3 @@ describe('Studios Route Test', ()=> {
 
 
 
-});
