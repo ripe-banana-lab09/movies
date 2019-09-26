@@ -1,4 +1,4 @@
-const request = require('./request');
+const request = require('../request');
 
 describe('test to see we have an app', ()=> {
   it('works?', ()=> {
