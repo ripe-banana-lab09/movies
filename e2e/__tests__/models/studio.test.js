@@ -34,8 +34,4 @@ describe('Studio Model', ()=> {
     const { errors } = studio.validateSync();
     expect(errors.name.kind).toBe('required');
   });
-
-
-
-
 });
