@@ -22,6 +22,18 @@ describe('Studio Model', ()=> {
       _id: expect.any(Object),
     });
   });
+  it('enforced required fields', ()=> {
+    const data = {
+      address: { 
+        city: 'Burbank',
+        state: 'California',
+        country: 'USA'
+      }
+    };
+    const studio = new Studio(data);
+    const { errors } = studio.validateSync();
+    expect(errors.name.kind).toBe('required');
+  });
 
 
 
