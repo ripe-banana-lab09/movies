@@ -69,12 +69,7 @@ describe('Studios Route Test', ()=> {
 
   });
 });
-	
 
-	
-	// it('gets a list of studios', () => {
-
-	// })
 
 
 
