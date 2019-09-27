@@ -4,7 +4,7 @@ const Film = require('../../../lib/models/film');
 const { ObjectId } = require('mongoose').Types;
 
 describe('Film Model', ()=> {
-  it('validates a film model', () => {
+  it.skip('validates a film model', () => {
     const data = {
       title: 'Spider-man',
       studio: new ObjectId,
