@@ -32,7 +32,7 @@ describe('Film Model', ()=> {
   });
 
 
-  it.skip('enforced required fields', ()=> {
+  it('enforced required fields', ()=> {
     const data = {
       studio: new mongoose.Types.ObjectId,
       released: 2017,
@@ -43,6 +43,6 @@ describe('Film Model', ()=> {
     };
     const film = new Film(data);
     const { errors } = film.validateSync();
-    expect(errors.name.kind).toBe('required');
+    expect(errors.title.kind).toBe('required');
   });
 });
