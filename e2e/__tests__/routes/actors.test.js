@@ -51,7 +51,7 @@ describe('Tests actor API routes', ()=> {
       .then(() => {
         return request
           .get('/api/actors')
-          .expect(200)
+          .expect(200);
       })
       .then(({ body }) => {
         expect(body.length).toBe(2);
