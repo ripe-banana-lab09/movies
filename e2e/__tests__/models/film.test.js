@@ -6,28 +6,38 @@ const { ObjectId } = require('mongoose').Types;
 describe('Film Model', ()=> {
   it('validates a film model', () => {
     const data = {
-      title: '',
-      studio: [new ObjectId()],
-
-
+      title: 'Spider-man',
+      studio: new ObjectId,
+      released: 2017,
+      cast: [{
+        role: 'Spider-man',
+        actor: new ObjectId()
+      }]
     };
     const film = new Film(data);
     const errors = film.validateSync();
     expect(errors).toBeUndefined();
 
-    const json = film.toJSON();
+    const json = film.toJSON(); 
+    console.log(json);
     expect(json).toEqual({
       ...data,
       _id: expect.any(Object),
+      ...data,
+      cast: [{
+        _id: expect.any(Object)
+      }]
+      
     });
   });
-  it('enforced required fields', ()=> {
+  it.skip('enforced required fields', ()=> {
     const data = {
-      address: { 
-        city: 'Burbank',
-        state: 'California',
-        country: 'USA'
-      }
+      studio: new mongoose.Types.ObjectId,
+      released: 2017,
+      cast: [{
+        role: 'Spider-man',
+        actor: new ObjectId()
+      }]
     };
     const film = new Film(data);
     const { errors } = film.validateSync();
