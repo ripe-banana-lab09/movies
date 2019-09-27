@@ -4,10 +4,10 @@ const Film = require('../../../lib/models/film');
 const { ObjectId } = require('mongoose').Types;
 
 describe('Film Model', ()=> {
-  it.skip('validates a film model', () => {
+  it('validates a film model', () => {
     const data = {
       title: 'Spider-man',
-      studio: new ObjectId,
+      studio: new ObjectId(),
       released: 2017,
       cast: [{
         role: 'Spider-man',
@@ -19,17 +19,19 @@ describe('Film Model', ()=> {
     expect(errors).toBeUndefined();
 
     const json = film.toJSON(); 
-    console.log(json);
     expect(json).toEqual({
       ...data,
       _id: expect.any(Object),
-      ...data,
       cast: [{
-        _id: expect.any(Object)
+        _id: expect.any(Object),
+        actor: expect.any(Object),
+        ...data.cast[0]
       }]
       
     });
   });
+
+
   it.skip('enforced required fields', ()=> {
     const data = {
       studio: new mongoose.Types.ObjectId,
