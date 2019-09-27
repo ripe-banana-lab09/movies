@@ -36,4 +36,25 @@ describe('Tests actor API routes', ()=> {
         });
     });
   });
+  it('gets all actors', () => {
+    return Promise.all([
+      postActor({
+        name: 'Tom Holland',
+        dob: '1996-06-01',
+        pob: 'United Kingdom'
+      }),
+      postActor({
+        name: 'Robert Downey Jr.',
+        dob: '1965-04-04',
+        pob: 'United States'
+      })])
+      .then(() => {
+        return request
+          .get('/api/actors')
+          .expect(200)
+      })
+      .then(({ body }) => {
+        expect(body.length).toBe(2);
+      });
+  });
 });
