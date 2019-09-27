@@ -26,5 +26,15 @@ describe('Reviewers Route Test', ()=> {
       });
     });
   });
+  it('gets reviewer by id', () => {
+    return postReviewer(data).then(reviewer => {
+      return request.get(`/api/reviewers/${reviewer._id}`)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(reviewer);
+        });
+    });
+  });
+  
 	
 });
