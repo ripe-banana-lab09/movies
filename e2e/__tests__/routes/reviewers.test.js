@@ -54,5 +54,17 @@ describe('Reviewers Route Test', ()=> {
         expect(body.length).toBe(2);
       });
   });
-  
+  it('updates a reviewer', () => {
+    return postReviewer(data)
+      .then(reviewer => {
+        reviewer.company = 'People Magazine';
+        return request
+          .put(`/api/reviewers/${reviewer._id}`)
+          .send(reviewer)
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body.company).toBe('People Magazine');
+      });
+  });
 });
