@@ -35,6 +35,24 @@ describe('Reviewers Route Test', ()=> {
         });
     });
   });
+  it('gets all reviewers', () => {
+    return Promise.all([
+      postReviewer({
+        name: 'Gene Siskel',
+        company: 'Chicago Tribune'
+      }),
+      postReviewer({
+        name: 'Peter Travers',
+        company: 'Rolling Stone'
+      })])
+      .then(() => {
+        return request
+          .get('/api/reviewers')
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body.length).toBe(2);
+      });
+  });
   
-	
 });
