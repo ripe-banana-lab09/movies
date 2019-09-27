@@ -40,13 +40,36 @@ describe('Studios Route Test', ()=> {
         });
     });
   });
+  it('gets all studios', ()=> {
+    return Promise.all([
+      postStudio({
+        name: 'Marvel',
+        address: { 
+          city: 'Burbank',
+          state: 'California',
+          country: 'USA'
+        }
+      }),
+      postStudio({
+        name: 'Sony',
+        address: { 
+          city: 'Culver City',
+          state: 'California',
+          country: 'USA'
+        }
+      })])
+      .then(() => {
+        return request
+          .get('/api/studios')
+          .expect(200);
+      })
+      .then(({ body }) => {
+        expect(body.length).toBe(2);
+      });
+
+  });
 });
-	
 
-	
-	// it('gets a list of studios', () => {
-
-	// })
 
 
 
