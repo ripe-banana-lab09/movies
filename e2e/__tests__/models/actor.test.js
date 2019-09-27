@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const mongoose = require('mongoose');
 const Actor = require('../../../lib/models/actor');
 
@@ -12,6 +13,11 @@ describe('Actor Model', () => {
     const errors = actor.validateSync();
     expect(errors).toBeUndefined();
 
-    const 
-  })
-})
+    const json = actor.toJSON();
+    expect(json).toEqual({
+      ...data,
+      _id: expect.any(Object),
+      dob: expect.any(String),
+    });
+  });
+});
