@@ -27,4 +27,13 @@ describe('Tests actor API routes', ()=> {
       });
     });
   });
+  it('gets actor by ID', () => {
+    return postActor(data).then(actor => {
+      return request.get(`/api/actors/${actor._id}`)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toEqual(actor);
+        });
+    });
+  });
 });
