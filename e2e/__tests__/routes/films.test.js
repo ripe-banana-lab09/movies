@@ -13,10 +13,12 @@ describe('Films Route Test', () => {
     title: 'Spider-man',
     studio: [],
     released: 2017,
-    cast: [{
-      role: 'Spider-man',
-      actor: []
-    }]
+    cast: [
+      {
+        role: 'Spider-man',
+        actor: []
+      }
+    ]
   };
 
   const actor = {
@@ -48,8 +50,8 @@ describe('Films Route Test', () => {
         .then(({ body }) => body)
     ])
       .then(([actor, studio]) => {
-        film.cast = actor.id;
-        film.studio = studio.id;
+        film.cast[0].actor = actor._id;
+        film.studio = studio._id;
         return request
           .post('/api/films')
           .send(film)
@@ -59,14 +61,31 @@ describe('Films Route Test', () => {
   }
   it('posts a film', () => {
     return postFilm(film).then(film => {
-      expect(film).toBe({
-        _id: expect.any(Object),
-        studio: expect.any(Object),
-        actor: expect.any(Object)
-
-      });
+      expect(film).toMatchInlineSnapshot(
+        {
+          _id: expect.any(String),
+          __v: 0,
+          cast: [expect.any(String)],
+          studio: expect.any(String),
+          ...film
+        },
+        `
+        Object {
+          "__v": 0,
+          "_id": "5d8eac386b6713513143fd1a",
+          "cast": Array [
+            Object {
+              "_id": "5d8eac386b6713513143fd1b",
+              "actor": "5d8eac386b6713513143fd18",
+              "role": "Spider-man",
+            },
+          ],
+          "released": 2017,
+          "studio": "5d8eac386b6713513143fd19",
+          "title": "Spider-man",
+        }
+      `
+      );
     });
   });
- 
-
 });
