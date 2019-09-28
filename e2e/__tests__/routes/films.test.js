@@ -13,12 +13,10 @@ describe('Films Route Test', () => {
     title: 'Spider-man',
     studio: [],
     released: 2017,
-    cast: [
-      {
-        role: 'Spider-man',
-        actor: []
-      }
-    ]
+    cast: [{
+      role: 'Spider-man',
+      actor: []
+    }]
   };
 
   const actor = {
@@ -37,24 +35,21 @@ describe('Films Route Test', () => {
   };
 
   function postFilm(film) {
-    return Promise.all([]);
-    return request
-      .post('/api/actors')
-      .send(actor)
-      .expect(200)
-      .then(({ body }) => {
-        film.actor[0] = body._id;
-        return request
-          .post('/api/films')
-          .send(film)
-          .expect(200);
-      })
-      .then(({ body }) => body)
-      .post('/api/studios')
-      .send(studio)
-      .expect(200)
-      .then(({ body }) => {
-        film.studio[0] = body._id;
+    return Promise.all([
+      request
+        .post('/api/actors')
+        .send(actor)
+        .expect(200)
+        .then(({ body }) => body),
+      request
+        .post('/api/studios')
+        .send(studio)
+        .expect(200)
+        .then(({ body }) => body)
+    ])
+      .then(([actor, studio]) => {
+        film.cast = actor.id;
+        film.studio = studio.id;
         return request
           .post('/api/films')
           .send(film)
@@ -64,13 +59,14 @@ describe('Films Route Test', () => {
   }
   it('posts a film', () => {
     return postFilm(film).then(film => {
-      expect(film).toMatchInlineSnapshot(
-        {
-          //   _id: expect.any(String),
-          //   studio:
-        },
-        `Object {}`
-      );
+      expect(film).toBe({
+        _id: expect.any(Object),
+        studio: expect.any(Object),
+        actor: expect.any(Object)
+
+      });
     });
   });
+ 
+
 });
