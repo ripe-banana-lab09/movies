@@ -11,7 +11,7 @@
     "pretest": "npm run lint",
     "jest": "jest --runInBand",
     "test": "npm run jest -- --coverage",
-    "test:watch": "npm run jest -- --watchAll",
+    "test:watch": "npm run jest -- --watchAll --updateSnapshot",
     "test:verbose": "npm run test -- --verbose",
     "start": "node server.js",
     "start:watch": "nodemon server.js"
