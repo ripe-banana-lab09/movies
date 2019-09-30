@@ -39,7 +39,13 @@ describe('Films Route Test', () => {
 
   const review = {
     rating: 5,
-    review: 'It was gud'
+    review: 'It was gud',
+    reviewer: []
+  };
+
+  const reviewer = {
+    name: 'Roger Ebert',
+    company: 'Sun'
   };
 
   function postFilm(film) {
@@ -53,17 +59,11 @@ describe('Films Route Test', () => {
         .post('/api/studios')
         .send(studio)
         .expect(200)
-        .then(({ body }) => body),
-      request
-        .post('/api/reviews')
-        .send(review)
-        .expect(200)
         .then(({ body }) => body)
     ])
-      .then(([actor, studio, review]) => {
+      .then(([actor, studio]) => {
         film.cast[0].actor = actor._id;
         film.studio = studio._id;
-        film.review = review._id;
         return request
           .post('/api/films')
           .send(film)
@@ -71,7 +71,20 @@ describe('Films Route Test', () => {
       })
       .then(({ body }) => body);
   }
-
+  function postReview(review) {
+    return request
+      .post('/api/reviewers')
+      .send(reviewer)
+      .expect(200)
+      .then(reviewer => {
+        review.reviewer = reviewer._id;
+        return request
+          .post('/api/reviews')
+          .send(review)
+          .expect(200);
+      })
+      .then(({ body }) => body);
+  }
   it('posts a film', () => {
     return postFilm(film).then(film => {
       expect(film).toMatchInlineSnapshot(
@@ -85,16 +98,16 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d927a845b8f807a2b68dcd6",
+          "_id": "5d92898acb3ca289620ccc7b",
           "cast": Array [
             Object {
-              "_id": "5d927a845b8f807a2b68dcd7",
-              "actor": "5d927a845b8f807a2b68dcd3",
+              "_id": "5d92898acb3ca289620ccc7c",
+              "actor": "5d92898acb3ca289620ccc79",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d927a845b8f807a2b68dcd4",
+          "studio": "5d92898acb3ca289620ccc7a",
           "title": "Spider-man",
         }
       `
@@ -103,21 +116,32 @@ describe('Films Route Test', () => {
   });
   it('Gets a film by ID', () => {
     return postFilm(film).then(film => {
-      return request
-        .get(`/api/films/${film._id}`)
-        .expect(200)
+      review.film = film._id;
+      return postReview(review)
+        .then(review => {
+          return request.get(`/api/films/${review.film}`).expect(200);
+        })
         .then(({ body }) => {
-          expect(body).toMatchInlineSnapshot(
-            {
+          expect(body).toMatchInlineSnapshot({
+            _id: expect.any(String),
+            __v: 0,
+            cast: [
+              {
+                _id: expect.any(String),
+                ...film.cast
+              }
+            ],
+            studio: {
               _id: expect.any(String),
-              __v: 0,
-              cast: [expect.any(String)],
-              studio: expect.any(String),
-              reviews: expect.any(String),
-              ...film
+              name: expect.any(String)
             },
-            `Object {}`
-          );
+            reviews: {
+              _id: expect.any(String),
+              rating: 5,
+              review: 'It was gud'
+            },
+            ...film
+          });
         });
     });
   });
