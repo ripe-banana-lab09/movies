@@ -19,13 +19,6 @@ describe('Films Route Test', () => {
         role: 'Spider-man',
         actor: []
       }
-    ],
-    reviews: [
-      // {
-      //   rating: 5,
-      //   review: 'It was gud',
-      //   reviewer: []
-      // }
     ]
   };
 
@@ -47,7 +40,6 @@ describe('Films Route Test', () => {
   const review = {
     rating: 5,
     review: 'It was gud'
-    // reviewer: []
   };
 
   function postFilm(film) {
@@ -93,16 +85,16 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d9277d5bdd00176aa312226",
+          "_id": "5d927a845b8f807a2b68dcd6",
           "cast": Array [
             Object {
-              "_id": "5d9277d5bdd00176aa312227",
-              "actor": "5d9277d5bdd00176aa312223",
+              "_id": "5d927a845b8f807a2b68dcd7",
+              "actor": "5d927a845b8f807a2b68dcd3",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d9277d5bdd00176aa312224",
+          "studio": "5d927a845b8f807a2b68dcd4",
           "title": "Spider-man",
         }
       `
@@ -115,14 +107,17 @@ describe('Films Route Test', () => {
         .get(`/api/films/${film._id}`)
         .expect(200)
         .then(({ body }) => {
-          expect(body).toMatchInlineSnapshot({
-            _id: expect.any(String),
-            __v: 0,
-            cast: [expect.any(String)],
-            studio: expect.any(String),
-            reviews: expect.any(String),
-            ...film
-          });
+          expect(body).toMatchInlineSnapshot(
+            {
+              _id: expect.any(String),
+              __v: 0,
+              cast: [expect.any(String)],
+              studio: expect.any(String),
+              reviews: expect.any(String),
+              ...film
+            },
+            `Object {}`
+          );
         });
     });
   });
