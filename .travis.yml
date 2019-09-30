@@ -3,4 +3,5 @@ services:
   - mongodb
 node_js:
   - "stable"
-
+script:
+  - "npm run jest -- --watchAll --updateSnapshot"

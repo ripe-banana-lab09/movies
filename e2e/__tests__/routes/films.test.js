@@ -72,16 +72,16 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d925fdd8299ea705d4e8700",
+          "_id": "5d9263ba758461712f600e89",
           "cast": Array [
             Object {
-              "_id": "5d925fdd8299ea705d4e8701",
-              "actor": "5d925fdd8299ea705d4e86fe",
+              "_id": "5d9263ba758461712f600e8a",
+              "actor": "5d9263ba758461712f600e87",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d925fdd8299ea705d4e86ff",
+          "studio": "5d9263ba758461712f600e88",
           "title": "Spider-man",
         }
       `
