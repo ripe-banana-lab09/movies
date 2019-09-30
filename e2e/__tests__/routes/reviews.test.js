@@ -6,14 +6,14 @@ describe('Reviews Route Test', () => {
     return Promise.all([
       db.dropCollection('reviewers'),
       db.dropCollection('films'),
-      db.dropCollection('reviews'),
+      db.dropCollection('reviews')
     ]);
   });
   const review = {
     rating: 5,
     reviewer: [],
-    review: 'It was gud',
-    film: []
+    review: 'It was gud'
+    // film:
   };
 
   const reviewer = {
@@ -21,18 +21,53 @@ describe('Reviews Route Test', () => {
     company: 'Chicago Sun'
   };
 
+  const actor = {
+    name: 'Tom Holland',
+    dob: '1996-06-01',
+    pob: 'United Kingdom'
+  };
+
+  const studio = {
+    name: 'Marvel',
+    address: {
+      city: 'Burbank',
+      state: 'California',
+      country: 'USA'
+    }
+  };
+
   const film = {
     title: 'Spider-man',
-    studio: [],
     released: 2017,
     cast: [
       {
-        role: 'Spider-man',
-        actor: []
+        role: 'Spider-man'
       }
     ]
   };
-
+  function postFilm(film) {
+    return Promise.all([
+      request
+        .post('/api/actors')
+        .send(actor)
+        .expect(200)
+        .then(({ body }) => body),
+      request
+        .post('/api/studios')
+        .send(studio)
+        .expect(200)
+        .then(({ body }) => body)
+    ])
+      .then(([actor, studio]) => {
+        film.cast[0].actor = actor._id;
+        film.studio = studio._id;
+        return request
+          .post('/api/films')
+          .send(film)
+          .expect(200);
+      })
+      .then(({ body }) => body);
+  }
   function postReview(review) {
     return Promise.all([
       request
@@ -48,7 +83,7 @@ describe('Reviews Route Test', () => {
     ])
       .then(([reviewer, film]) => {
         review.reviewer = reviewer._id;
-        review.film.title = film._id;
+        review.film = film._id;
         return request
           .post('/api/reviews')
           .send(review)
@@ -57,17 +92,29 @@ describe('Reviews Route Test', () => {
       .then(({ body }) => body);
   }
   it('posts a review', () => {
-    return postReview(review).then(review => {
-      expect(review).toMatchInlineSnapshot(
-        {
-          _id: expect.any(String),
-          __v: 0,
-          reviewer: expect.any(String),
-          film: expect.any(String),
-          ...review
-        },
-      );
+    return postFilm(film).then(newFilm => {
+      newFilm._id = review.film;
+      return postReview(review).then(review => {
+        expect(review).toMatchInlineSnapshot(
+          {
+            _id: expect.any(String),
+            __v: 0,
+            reviewer: expect.any(String),
+            film: expect.any(String),
+            ...review
+          },
+          `
+          Object {
+            "__v": 0,
+            "_id": "5d923d6ac8f78061ffc6b570",
+            "film": "5d923d6ac8f78061ffc6b56e",
+            "rating": 5,
+            "review": "It was gud",
+            "reviewer": "5d923d6ac8f78061ffc6b56d",
+          }
+        `
+        );
+      });
     });
   });
-
 });
