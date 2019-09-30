@@ -93,23 +93,39 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d92778c174dc176aad04004",
+          "_id": "5d9277d5bdd00176aa312226",
           "cast": Array [
             Object {
-              "_id": "5d92778c174dc176aad04005",
-              "actor": "5d92778c174dc176aad04001",
+              "_id": "5d9277d5bdd00176aa312227",
+              "actor": "5d9277d5bdd00176aa312223",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d92778c174dc176aad04002",
+          "studio": "5d9277d5bdd00176aa312224",
           "title": "Spider-man",
         }
       `
       );
     });
   });
-  it();
+  it('Gets a film by ID', () => {
+    return postFilm(film).then(film => {
+      return request
+        .get(`/api/films/${film._id}`)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toMatchInlineSnapshot({
+            _id: expect.any(String),
+            __v: 0,
+            cast: [expect.any(String)],
+            studio: expect.any(String),
+            reviews: expect.any(String),
+            ...film
+          });
+        });
+    });
+  });
   it('Deletes a Film', () => {
     return postFilm(film).then(film => {
       return request.delete(`/api/films/${film._id}`).expect(200);
