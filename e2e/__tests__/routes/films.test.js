@@ -6,7 +6,8 @@ describe('Films Route Test', () => {
     return Promise.all([
       db.dropCollection('films'),
       db.dropCollection('actors'),
-      db.dropCollection('studios')
+      db.dropCollection('studios'),
+      db.dropCollection('reviews')
     ]);
   });
   const film = {
@@ -18,6 +19,13 @@ describe('Films Route Test', () => {
         role: 'Spider-man',
         actor: []
       }
+    ],
+    reviews: [
+      // {
+      //   rating: 5,
+      //   review: 'It was gud',
+      //   reviewer: []
+      // }
     ]
   };
 
@@ -36,6 +44,12 @@ describe('Films Route Test', () => {
     }
   };
 
+  const review = {
+    rating: 5,
+    review: 'It was gud',
+    // reviewer: []
+  };
+
   function postFilm(film) {
     return Promise.all([
       request
@@ -47,11 +61,17 @@ describe('Films Route Test', () => {
         .post('/api/studios')
         .send(studio)
         .expect(200)
+        .then(({ body }) => body),
+      request
+        .post('/api/reviews')
+        .send(review)
+        .expect(200)
         .then(({ body }) => body)
     ])
-      .then(([actor, studio]) => {
+      .then(([actor, studio, review]) => {
         film.cast[0].actor = actor._id;
         film.studio = studio._id;
+        film.review = review._id;
         return request
           .post('/api/films')
           .send(film)
@@ -59,6 +79,7 @@ describe('Films Route Test', () => {
       })
       .then(({ body }) => body);
   }
+  
   it('posts a film', () => {
     return postFilm(film).then(film => {
       expect(film).toMatchInlineSnapshot(
@@ -67,21 +88,22 @@ describe('Films Route Test', () => {
           __v: 0,
           cast: [expect.any(String)],
           studio: expect.any(String),
+          review: [expect.any(String)],
           ...film
         },
         `
-        Object {
+        Object { 
           "__v": 0,
-          "_id": "5d9265830c8d89e830520b61",
+          "_id": "5d9268a826d92716de8eb70c",
           "cast": Array [
             Object {
-              "_id": "5d9265830c8d89e830520b62",
-              "actor": "5d9265830c8d89e830520b5f",
+              "_id": "5d9268a826d92716de8eb70d",
+              "actor": "5d9268a826d92716de8eb709",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d9265830c8d89e830520b60",
+          "studio": "5d9268a826d92716de8eb70a",
           "title": "Spider-man",
         }
       `
