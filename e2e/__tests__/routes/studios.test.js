@@ -66,7 +66,11 @@ describe('Studios Route Test', ()=> {
       .then(({ body }) => {
         expect(body.length).toBe(2);
       });
-
+  });
+  it('Deletes a Studio', () => {
+    return postStudio(marvel).then(studio => {
+      return request.delete(`/api/studios/${studio._id}`).expect(200);
+    });
   });
 });
 

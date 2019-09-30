@@ -106,11 +106,11 @@ describe('Reviews Route Test', () => {
           `
           Object {
             "__v": 0,
-            "_id": "5d923d6ac8f78061ffc6b570",
-            "film": "5d923d6ac8f78061ffc6b56e",
+            "_id": "5d92405bb2428561ff4a1f49",
+            "film": "5d92405bb2428561ff4a1f47",
             "rating": 5,
             "review": "It was gud",
-            "reviewer": "5d923d6ac8f78061ffc6b56d",
+            "reviewer": "5d92405bb2428561ff4a1f46",
           }
         `
         );

@@ -72,20 +72,25 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d923d6aab617761ffaa252c",
+          "_id": "5d92405bbab5d661ff7e71bf",
           "cast": Array [
             Object {
-              "_id": "5d923d6aab617761ffaa252d",
-              "actor": "5d923d6aab617761ffaa252a",
+              "_id": "5d92405bbab5d661ff7e71c0",
+              "actor": "5d92405bbab5d661ff7e71bd",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d923d6aab617761ffaa252b",
+          "studio": "5d92405bbab5d661ff7e71be",
           "title": "Spider-man",
         }
       `
       );
+    });
+  });
+  it('Deletes a Film', () => {
+    return postFilm(film).then(film => {
+      return request.delete(`/api/films/${film._id}`).expect(200);
     });
   });
 });

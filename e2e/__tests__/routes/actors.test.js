@@ -57,4 +57,9 @@ describe('Tests actor API routes', ()=> {
         expect(body.length).toBe(2);
       });
   });
+  it('Deletes an Actor', () => {
+    return postActor(data).then(actor => {
+      return request.delete(`/api/actors/${actor._id}`).expect(200);
+    });
+  });
 });
