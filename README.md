@@ -7,28 +7,36 @@ Ripe-Banana
 John Nelson and Donna Lambert
 
 ### Links and Resources
-* [submission PR](https://github.com/johnnelson-401-advanced-javascript/mongoose-is-fun/pull/3)
-* [travis](https://travis-ci.com/johnnelson-401-advanced-javascript/mongoose-is-fun/builds/129196001)
+* [submission PR](https://github.com/ripe-banana-lab09/movies/pull/1)
+* [travis]()
 
 
 #### Documentation
-* [api docs](http://xyz.com) (API servers)
+<!-- * [api docs](http://xyz.com) (API servers) -->
 
 
 ### Setup
 #### `.env` requirements
 * `PORT` - 3000
-* `MONGODB_URI` - mongodb://heroku_4rfjczz1:ped1fdk3mt2njmhgcka7pofvn1@ds147902.mlab.com:47902/heroku_4rfjczz1
+* `MONGODB_URI` - mongodb://heroku_zz3qzv1m:h5qgradc1ck9v7riuch8v3jh4n@ds227808.mlab.com:27808/heroku_zz3qzv1m
 
 **or, include an `.env.example`**
 
 #### Running the app
 
 **Describe what npm scripts do**
- lint
+  pretest
+    npm run lint
+  test
+    npm run jest -- --coverage
+  start
+    node server.js
+
+available via `npm run-script`:
+  lint
     eslint .
   jest
-    jest
+    jest --runInBand
   test:watch
     npm run jest -- --watchAll
   test:verbose
