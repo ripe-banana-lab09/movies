@@ -46,7 +46,7 @@ describe('Films Route Test', () => {
 
   const review = {
     rating: 5,
-    review: 'It was gud',
+    review: 'It was gud'
     // reviewer: []
   };
 
@@ -79,7 +79,7 @@ describe('Films Route Test', () => {
       })
       .then(({ body }) => body);
   }
-  
+
   it('posts a film', () => {
     return postFilm(film).then(film => {
       expect(film).toMatchInlineSnapshot(
@@ -88,28 +88,28 @@ describe('Films Route Test', () => {
           __v: 0,
           cast: [expect.any(String)],
           studio: expect.any(String),
-          review: [expect.any(String)],
           ...film
         },
         `
-        Object { 
+        Object {
           "__v": 0,
-          "_id": "5d9268a826d92716de8eb70c",
+          "_id": "5d92778c174dc176aad04004",
           "cast": Array [
             Object {
-              "_id": "5d9268a826d92716de8eb70d",
-              "actor": "5d9268a826d92716de8eb709",
+              "_id": "5d92778c174dc176aad04005",
+              "actor": "5d92778c174dc176aad04001",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d9268a826d92716de8eb70a",
+          "studio": "5d92778c174dc176aad04002",
           "title": "Spider-man",
         }
       `
       );
     });
   });
+  it();
   it('Deletes a Film', () => {
     return postFilm(film).then(film => {
       return request.delete(`/api/films/${film._id}`).expect(200);
