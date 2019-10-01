@@ -128,7 +128,6 @@ describe('Films Route Test', () => {
             cast: [
               {
                 _id: expect.any(String),
-                ...film.cast
               }
             ],
             studio: {
