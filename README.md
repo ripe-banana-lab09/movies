@@ -7,7 +7,7 @@ Ripe-Banana
 John Nelson and Donna Lambert
 
 ### Links and Resources
-* [submission PR](https://github.com/ripe-banana-lab09/movies/pull/1)
+* [submission PR](https://github.com/ripe-banana-lab09/movies/pull/2)
 * [travis](https://travis-ci.com/ripe-banana-lab09/movies/builds/129747126)
 
 
