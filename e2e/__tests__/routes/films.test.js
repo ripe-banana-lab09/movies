@@ -98,16 +98,16 @@ describe('Films Route Test', () => {
         `
         Object {
           "__v": 0,
-          "_id": "5d92898acb3ca289620ccc7b",
+          "_id": "5d9bbc33258ae0d5eabfb414",
           "cast": Array [
             Object {
-              "_id": "5d92898acb3ca289620ccc7c",
-              "actor": "5d92898acb3ca289620ccc79",
+              "_id": "5d9bbc33258ae0d5eabfb415",
+              "actor": "5d9bbc33258ae0d5eabfb412",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d92898acb3ca289620ccc7a",
+          "studio": "5d9bbc33258ae0d5eabfb413",
           "title": "Spider-man",
         }
       `
@@ -122,25 +122,51 @@ describe('Films Route Test', () => {
           return request.get(`/api/films/${review.film}`).expect(200);
         })
         .then(({ body }) => {
-          expect(body).toMatchInlineSnapshot({
-            _id: expect.any(String),
-            __v: 0,
-            cast: [
-              {
+          expect(body).toMatchInlineSnapshot(
+            {
+              _id: expect.any(String),
+              __v: 0,
+              cast: [
+                {
+                  _id: expect.any(String),
+                  actor: expect.any(String)
+                }
+              ],
+              studio: {
                 _id: expect.any(String),
+                name: expect.any(String)
+              },
+              reviews: {
+                _id: expect.any(String),
+                rating: 5,
+                review: 'It was gud'
               }
-            ],
-            studio: {
-              _id: expect.any(String),
-              name: expect.any(String)
             },
-            reviews: {
-              _id: expect.any(String),
-              rating: 5,
-              review: 'It was gud'
-            },
-            ...film
-          });
+            `
+            Object {
+              "__v": 0,
+              "_id": Any<String>,
+              "cast": Array [
+                Object {
+                  "_id": Any<String>,
+                  "actor": Any<String>,
+                  "role": "Spider-man",
+                },
+              ],
+              "released": 2017,
+              "reviews": Object {
+                "_id": Any<String>,
+                "rating": 5,
+                "review": "It was gud",
+              },
+              "studio": Object {
+                "_id": Any<String>,
+                "name": Any<String>,
+              },
+              "title": "Spider-man",
+            }
+          `
+          );
         });
     });
   });
