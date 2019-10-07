@@ -90,26 +90,29 @@ describe('Films Route Test', () => {
     return postFilm(film).then(film => {
       expect(film).toMatchInlineSnapshot(
         {
-          _id: expect.any(String),
-          __v: 0,
-          cast: [expect.stringMatching(mongoId)],
-          studio: expect.stringMatching(mongoId),
-          ...film
+          ...matchMongoId,
+          cast: [
+            {
+              _id: expect.any(String),
+              actor: expect.any(String)
+            }
+          ],
+          studio: expect.any(String)
         },
 
         `
         Object {
           "__v": 0,
-          "_id": "5d9bc3b5c18494d5eaf13f47",
+          "_id": StringMatching /\\^\\[a-f\\\\d\\]\\{24\\}\\$/i,
           "cast": Array [
             Object {
-              "_id": "5d9bc3b5c18494d5eaf13f48",
-              "actor": "5d9bc3b5c18494d5eaf13f45",
+              "_id": Any<String>,
+              "actor": Any<String>,
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d9bc3b5c18494d5eaf13f46",
+          "studio": Any<String>,
           "title": "Spider-man",
         }
       `
@@ -126,29 +129,28 @@ describe('Films Route Test', () => {
         .then(({ body }) => {
           expect(body).toMatchInlineSnapshot(
             {
-              ...body,
-              _id: expect.any(String),
+              ...matchMongoId,
               cast: [
                 {
                   _id: expect.any(String),
-                  ...body.cast[0]
+                  actor: expect.any(String)
                 }
               ],
-              studio: {
+              reviews: {
                 _id: expect.any(String)
               },
-              reviews: {
+              studio: {
                 _id: expect.any(String)
               }
             },
             `
             Object {
               "__v": 0,
-              "_id": Any<String>,
+              "_id": StringMatching /\\^\\[a-f\\\\d\\]\\{24\\}\\$/i,
               "cast": Array [
                 Object {
-                  "_id": "5d9bc3b5c18494d5eaf13f4c",
-                  "actor": "5d9bc3b5c18494d5eaf13f49",
+                  "_id": Any<String>,
+                  "actor": Any<String>,
                   "role": "Spider-man",
                 },
               ],

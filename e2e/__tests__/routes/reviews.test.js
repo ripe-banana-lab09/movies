@@ -100,18 +100,17 @@ describe('Reviews Route Test', () => {
             _id: expect.any(String),
             __v: 0,
             reviewer: expect.any(String),
-            film: expect.any(String),
-            ...review
+            film: expect.any(String)
           },
 
           `
           Object {
             "__v": 0,
-            "_id": "5d9bc3b5fad65dd5ea981706",
-            "film": "5d9bc3b5fad65dd5ea981704",
+            "_id": Any<String>,
+            "film": Any<String>,
             "rating": 5,
             "review": "It was gud",
-            "reviewer": "5d9bc3b5fad65dd5ea981703",
+            "reviewer": Any<String>,
           }
         `
         );
