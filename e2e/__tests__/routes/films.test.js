@@ -1,6 +1,6 @@
 const request = require('../../request');
 const db = require('../../db');
-const { matchMongoId, mongoId } = require('../../match-helpers');
+const { matchMongoId } = require('../../match-helpers');
 
 describe('Films Route Test', () => {
   beforeEach(() => {
