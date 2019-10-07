@@ -1,5 +1,6 @@
 const request = require('../../request');
 const db = require('../../db');
+const { matchMongoId, mongoId } = require('../../match-helpers');
 
 describe('Films Route Test', () => {
   beforeEach(() => {
@@ -91,23 +92,24 @@ describe('Films Route Test', () => {
         {
           _id: expect.any(String),
           __v: 0,
-          cast: [expect.any(String)],
-          studio: expect.any(String),
+          cast: [expect.stringMatching(mongoId)],
+          studio: expect.stringMatching(mongoId),
           ...film
         },
+
         `
         Object {
           "__v": 0,
-          "_id": "5d9bbc33258ae0d5eabfb414",
+          "_id": "5d9bc3b5c18494d5eaf13f47",
           "cast": Array [
             Object {
-              "_id": "5d9bbc33258ae0d5eabfb415",
-              "actor": "5d9bbc33258ae0d5eabfb412",
+              "_id": "5d9bc3b5c18494d5eaf13f48",
+              "actor": "5d9bc3b5c18494d5eaf13f45",
               "role": "Spider-man",
             },
           ],
           "released": 2017,
-          "studio": "5d9bbc33258ae0d5eabfb413",
+          "studio": "5d9bc3b5c18494d5eaf13f46",
           "title": "Spider-man",
         }
       `
@@ -124,22 +126,19 @@ describe('Films Route Test', () => {
         .then(({ body }) => {
           expect(body).toMatchInlineSnapshot(
             {
+              ...body,
               _id: expect.any(String),
-              __v: 0,
               cast: [
                 {
                   _id: expect.any(String),
-                  actor: expect.any(String)
+                  ...body.cast[0]
                 }
               ],
               studio: {
-                _id: expect.any(String),
-                name: expect.any(String)
+                _id: expect.any(String)
               },
               reviews: {
-                _id: expect.any(String),
-                rating: 5,
-                review: 'It was gud'
+                _id: expect.any(String)
               }
             },
             `
@@ -148,8 +147,8 @@ describe('Films Route Test', () => {
               "_id": Any<String>,
               "cast": Array [
                 Object {
-                  "_id": Any<String>,
-                  "actor": Any<String>,
+                  "_id": "5d9bc3b5c18494d5eaf13f4c",
+                  "actor": "5d9bc3b5c18494d5eaf13f49",
                   "role": "Spider-man",
                 },
               ],
@@ -161,7 +160,7 @@ describe('Films Route Test', () => {
               },
               "studio": Object {
                 "_id": Any<String>,
-                "name": Any<String>,
+                "name": "Marvel",
               },
               "title": "Spider-man",
             }
